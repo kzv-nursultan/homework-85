@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
-import {artistReducer} from "./store/reducers/artistReducer";
-import thunk from "redux-thunk";
 import {Provider} from "react-redux";
+import thunk from "redux-thunk";
+import {artistReducer} from "./store/reducers/artistReducer";
+import {albumReducer} from "./store/reducers/albumReducer";
+import App from './App';
+import './index.css';
 
 const rootReducer = combineReducers({
-    artists: artistReducer
+    artists: artistReducer,
+    albums: albumReducer,
 });
 
 const composeEnhancers =  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

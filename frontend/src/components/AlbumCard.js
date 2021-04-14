@@ -7,48 +7,39 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import {useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 390,
-        margin:'10px auto'
+        maxWidth: 345,
     },
     media: {
-        height: 200,
-        backgroundPosition:'top center',
-
+        height: 140,
     },
 });
 
-const ArtistCard = ({image, id, year, name}) => {
+const AlbumCard = ({image, name, year}) => {
     const classes = useStyles();
-    const history = useHistory();
-    const photoUrl = 'http://localhost:8000/uploads/' + image;
-
-    const learnClick = () => {
-        history.push('/albums/' + id);
-    };
+    const albumUrl = 'http://localhost:8000/uploads/' + image;
 
     return (
         <Card className={classes.root}>
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
-                    image = {photoUrl}
-                    title="artist or band photo"
+                    image={albumUrl}
+                    title="albums image"
                 />
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                        Name: <strong>{name}</strong>
+                        Album name: <strong>{name}</strong>
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p" style={{ display: year ? "block" : "none"}}>
+                    <Typography variant="body2" color="textSecondary" component="p">
                         Production year: <strong>{year}</strong>
                     </Typography>
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary" onClick={learnClick}>
+                <Button size="small" color="primary">
                     Learn More
                 </Button>
             </CardActions>
@@ -56,4 +47,4 @@ const ArtistCard = ({image, id, year, name}) => {
     );
 };
 
-export default ArtistCard;
+export default AlbumCard;
