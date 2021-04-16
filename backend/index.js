@@ -22,8 +22,8 @@ app.use('/users', users);
 app.use('/track_history', trackHistory);
 
 const run = async () => {
-    await mongoose.connect('mongodb://localhost/musicapi',
-        { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+    const connection = await mongoose.connect('mongodb://localhost/musicapi',
+        { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false});
 
     app.listen(port, ()=>{
         console.log('server started on port ' + port);

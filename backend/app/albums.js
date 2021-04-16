@@ -21,7 +21,7 @@ router.get('/', async (req,res)=>{
     if(req.query.artist) {
         const queries = req.query.artist
         try {
-            const data = await AlbumSchema.find({artist:queries}).populate('artist', 'name');
+            const data = await AlbumSchema.find({artist:queries}).populate('artist', 'name').sort({production_year:1});
             res.send(data);
         } catch (e) {
             res.status(400).send(e);

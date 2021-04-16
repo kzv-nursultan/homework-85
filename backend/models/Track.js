@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 const Schema = mongoose.Schema;
 
 const NewSchema = new Schema({
@@ -17,5 +18,6 @@ const NewSchema = new Schema({
     }
 });
 
+NewSchema.plugin(AutoIncrement,{inc_field:'number'});
 const TrackSchema = mongoose.model('TrackSchema', NewSchema);
 module.exports = TrackSchema;

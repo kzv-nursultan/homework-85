@@ -5,11 +5,19 @@ import {fetchAlbums} from "../../store/actions/AlbumsActions";
 import Button from "@material-ui/core/Button";
 import ReplyIcon from '@material-ui/icons/Reply';
 import {useHistory} from "react-router-dom";
-import ArtistCard from "../../components/ArtistCard/ArtistCard";
+import ItemCard from "../../components/ItemCard/ItemCard";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+    nameBlock:{
+       textAlign:'center'
+    }
+});
 
 const AlbumPage = props => {
     const dispatch = useDispatch();
     const history = useHistory();
+    const classes = useStyles();
     const albums = useSelector(state => state.albums.albums);
     const id = props.match.params.id;
 
@@ -19,6 +27,10 @@ const AlbumPage = props => {
 
     const backBtn = () => {
         history.push('/');
+    };
+
+    const moreBtn = (id) => {
+        history.push('/tracks/' + id);
     };
 
     let artistName = (
@@ -37,19 +49,20 @@ const AlbumPage = props => {
 
    if(albums[0]) {
        artistName = (
-           <Typography variant='h1'>
-               {albums[0].artist.name}
+           <Typography variant='h4' className={classes.nameBlock}>
+               Name: <strong>{albums[0].artist.name}</strong>
            </Typography>
        );
    };
 
     const albumsList = (
        albums.map(album=>(
-           <ArtistCard
+           <ItemCard
            key = {album._id}
            name = {album.name}
            year = {album.production_year}
-           image = {album.image}/>
+           image = {album.image}
+           moreBtn={()=>moreBtn(album._id)}/>
        ))
     );
 

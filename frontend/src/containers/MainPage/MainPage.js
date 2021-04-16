@@ -2,8 +2,9 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Grid} from "@material-ui/core";
 import {getArtists} from "../../store/actions/ArtistActions";
-import ArtistCard from "../../components/ArtistCard/ArtistCard";
+import ItemCard from "../../components/ItemCard/ItemCard";
 import {makeStyles} from "@material-ui/core/styles";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles({
     mainBlock:{
@@ -17,6 +18,7 @@ const useStyles = makeStyles({
 
 const MainPage = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const classes = useStyles();
     const data = useSelector(state => state.artists.data);
 
@@ -24,13 +26,17 @@ const MainPage = () => {
         dispatch(getArtists());
     },[dispatch]);
 
+    const learnClick = (id) => {
+        history.push('/albums/' + id);
+    };
+
     const artistsList = (
        data.map(artist => (
-           <ArtistCard
+           <ItemCard
            key = {artist._id}
            image = {artist.image}
            name = {artist.name}
-           id = {artist._id}
+           moreBtn={()=>learnClick(artist._id)}
            />
        ))
     );
