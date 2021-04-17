@@ -4,6 +4,8 @@ import MainPage from "./containers/MainPage/MainPage";
 import ButtonAppBar from "./components/UI/AppBar";
 import AlbumPage from './containers/AlbumPage/AlbumPage';
 import TrackPage from "./containers/TrackPage/TrackPage";
+import UserSingIn from "./containers/Form/UserSingIn";
+import UserSignUp from "./containers/Form/UserSignUp";
 
 const App = () => {
 
@@ -14,6 +16,8 @@ const App = () => {
         <Route path='/' exact component={MainPage}/>
         <Route path='/albums/:id' component={AlbumPage}/>
         <Route path='/tracks/:id' component={TrackPage}/>
+        <Route path='/login' component={UserSingIn} />
+        <Route path='/register' component={UserSignUp}/>
     </Switch>
   </BrowserRouter>
   );

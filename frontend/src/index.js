@@ -6,13 +6,15 @@ import thunk from "redux-thunk";
 import {artistReducer} from "./store/reducers/artistReducer";
 import {albumReducer} from "./store/reducers/albumReducer";
 import {trackReducer} from "./store/reducers/trackReducer";
+import {usersReducer} from "./store/reducers/userReducer";
 import App from './App';
 import './index.css';
 
 const rootReducer = combineReducers({
     artists: artistReducer,
     albums: albumReducer,
-    tracks: trackReducer
+    tracks: trackReducer,
+    users: usersReducer,
 });
 
 const composeEnhancers =  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

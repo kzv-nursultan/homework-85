@@ -18,6 +18,7 @@ router.post('/', async (req,res)=>{
         await user.save();
         res.send(user);
     } catch (error){
+        console.log(error);
         res.status(400).send(error);
     }
 });
@@ -36,7 +37,10 @@ router.post('/session', async (req,res) => {
     try {
          user.generateToken();
          await user.save();
-         return res.status(200).send({token:user.token});
+         return res.status(200).send({
+             message:'username and password are correct',
+             user
+         });
     } catch (error){
         res.status(500).send(error);
     };
