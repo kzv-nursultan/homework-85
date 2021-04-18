@@ -34,6 +34,15 @@ router.post('/',async (req,res)=>{
     }
 });
 
+router.get('/:id', async (req,res)=>{
+    try {
+        const data = await trackHistory.find({user:req.params.id}).populate('track').sort({datetime:-1});
+        res.send(data);
+    } catch (error) {
+        res.status(500).send(error);
+    };
+});
+
 router.get('/', async (req,res)=>{
     try {
         const data = await trackHistory.find().populate(['user', 'track']);

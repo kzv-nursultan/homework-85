@@ -5,7 +5,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Button from "@material-ui/core/Button";
 import {Alert, AlertTitle} from "@material-ui/lab";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {NavLink, useHistory} from "react-router-dom";
+import {loginUser} from "../../store/actions/UsersActions";
 
 const useStyles = makeStyles({
     formBlock: {
@@ -23,12 +25,19 @@ const useStyles = makeStyles({
     },
     errorAlert: {
         maxWidth: 400
+    },
+    link:{
+        float:'right',
+        marginTop:'35px',
+        fontSize:'small'
     }
 })
 
 const UserSingIn = () => {
     const classes = useStyles();
-    const error = useSelector(state=>state.users.error);
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const error = useSelector(state=>state.users.loginError);
     const [user, setUser] = useState({
         username:'',
         password:''
@@ -41,12 +50,14 @@ const UserSingIn = () => {
             ...prevState,
             [name]:value
         }));
-
-        console.log(user);
     };
 
     const onSubmitHandler = e => {
         e.preventDefault();
+        dispatch(loginUser('/users/session', {...user}));
+        setTimeout(()=>{
+            history.push('/');
+        },2000);
     };
 
     return (
@@ -61,7 +72,7 @@ const UserSingIn = () => {
                <Grid item className={classes.errorAlert}>
                    <Alert severity="error">
                        <AlertTitle>Error</AlertTitle>
-                       {error.message || error.global}
+                       {error.error || error.global}
                    </Alert>
                </Grid>
            )}
@@ -84,6 +95,11 @@ const UserSingIn = () => {
                    variant='contained'>
                    Submit
                </Button>
+               <Grid item>
+                   <NavLink to='/register' className={classes.link}>
+                       Are you new?
+                   </NavLink>
+               </Grid>
            </form>
         </Grid>
     );

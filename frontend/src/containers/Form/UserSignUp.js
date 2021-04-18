@@ -6,8 +6,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Button from "@material-ui/core/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {postUser} from "../../store/actions/UsersActions";
-import {useHistory} from "react-router-dom";
-import {Alert, AlertTitle} from "@material-ui/lab";
+import {NavLink, useHistory} from "react-router-dom";
 
 const useStyles = makeStyles({
     formBlock: {
@@ -23,6 +22,11 @@ const useStyles = makeStyles({
         textTransform:'uppercase',
         marginTop:10,
     },
+    link:{
+        float:'right',
+        marginTop:'35px',
+        fontSize:'small'
+    }
 })
 
 const UserSingUp = () => {
@@ -45,16 +49,21 @@ const UserSingUp = () => {
         }));
     };
 
-    const onSubmitHandler = e => {
-        e.preventDefault();
-        dispatch(postUser('/users', {...user}));
-    };
-
     const getFieldError = fieldName => {
         try {
             return error.errors[fieldName].message;
         } catch (e) {
             return undefined;
+        };
+    };
+
+    const onSubmitHandler = e => {
+        e.preventDefault();
+        dispatch(postUser('/users', {...user}));
+        if (getFieldError("username")) {
+            setTimeout(() => {
+                history.push('/');
+            }, 1500);
         };
     };
 
@@ -90,6 +99,11 @@ const UserSingUp = () => {
                     variant='contained'>
                     Submit
                 </Button>
+               <Grid item>
+                   <NavLink to='/login' className={classes.link}>
+                       Already registered?
+                   </NavLink>
+               </Grid>
             </form>
         </Grid>
     );

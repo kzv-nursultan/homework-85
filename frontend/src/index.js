@@ -7,6 +7,7 @@ import {artistReducer} from "./store/reducers/artistReducer";
 import {albumReducer} from "./store/reducers/albumReducer";
 import {trackReducer} from "./store/reducers/trackReducer";
 import {usersReducer} from "./store/reducers/userReducer";
+import {trackHistoryReducer} from "./store/reducers/trackHistoryReducer";
 import App from './App';
 import './index.css';
 
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     albums: albumReducer,
     tracks: trackReducer,
     users: usersReducer,
+    history: trackHistoryReducer,
 });
 
 const composeEnhancers =  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -88,9 +88,10 @@ const TrackPage = props => {
            tracks.map(track=>(
                <TracksCard
                    key={track._id}
+                   id={track._id}
                    name={track.name}
                    duration={track.duration}
-                    number={i+=1}/>
+                   number={i+=1}/>
            ))
        );
     };

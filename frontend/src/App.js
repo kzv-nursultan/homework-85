@@ -6,6 +6,7 @@ import AlbumPage from './containers/AlbumPage/AlbumPage';
 import TrackPage from "./containers/TrackPage/TrackPage";
 import UserSingIn from "./containers/Form/UserSingIn";
 import UserSignUp from "./containers/Form/UserSignUp";
+import TrackHistory from "./containers/TrackHistory/TrackHistory";
 
 const App = () => {
 
@@ -18,6 +19,7 @@ const App = () => {
         <Route path='/tracks/:id' component={TrackPage}/>
         <Route path='/login' component={UserSingIn} />
         <Route path='/register' component={UserSignUp}/>
+        <Route path='/track_history' component={TrackHistory}/>
     </Switch>
   </BrowserRouter>
   );

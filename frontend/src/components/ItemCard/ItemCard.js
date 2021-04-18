@@ -14,22 +14,24 @@ const useStyles = makeStyles({
         margin:'10px auto'
     },
     media: {
-        height: 200,
-        backgroundPosition:'top center',
-
+        height: 300,
+        backgroundPosition:'center',
+        backgroundSize:'390px 300px',
+        backgroundRepeat:'no-repeat'
     },
 });
 
 const ItemCard = ({image, year, name, moreBtn}) => {
     const classes = useStyles();
     const photoUrl = 'http://localhost:8000/uploads/' + image;
+    const avatar = 'https://clipground.com/images/music-png-logo-3.png'
 
     return (
         <Card className={classes.root}>
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
-                    image = {photoUrl}
+                    image ={image ? photoUrl : avatar}
                     title="artist or band photo"
                 />
                 <CardContent>

@@ -5,6 +5,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {NavLink} from "react-router-dom";
 import {Grid} from "@material-ui/core";
+import {useSelector} from "react-redux";
+import ToolBar from "../ToolBar/ToolBar";
+import LoggedInUser from "../LoggedInUser/LoggedInUser";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ButtonAppBar = () => {
     const classes = useStyles();
+    const user = useSelector(state=>state.users.loginUser.user);
 
     return (
         <div className={classes.root}>
@@ -43,8 +47,7 @@ const ButtonAppBar = () => {
                         <NavLink to='/' className={classes.links}> <strong> MusicApi </strong></NavLink>
                     </Typography>
                    <Grid item className={classes.navs}>
-                       <NavLink to='/login' className={classes.links}> <strong> Sign in </strong></NavLink>
-                       <NavLink to='/register' className={classes.links}> <strong> Sign up </strong></NavLink>
+                       {user ? (<LoggedInUser username={user.username}/>) : (<ToolBar/>)}
                    </Grid>
                 </Toolbar>
             </AppBar>
