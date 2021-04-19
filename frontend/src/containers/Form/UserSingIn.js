@@ -6,7 +6,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Button from "@material-ui/core/Button";
 import {Alert, AlertTitle} from "@material-ui/lab";
 import {useDispatch, useSelector} from "react-redux";
-import {NavLink, useHistory} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {loginUser} from "../../store/actions/UsersActions";
 
 const useStyles = makeStyles({
@@ -36,8 +36,8 @@ const useStyles = makeStyles({
 const UserSingIn = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const history = useHistory();
     const error = useSelector(state=>state.users.loginError);
+    const loggedUser = useSelector(state=>state.users.loginUser);
     const [user, setUser] = useState({
         username:'',
         password:''
@@ -52,12 +52,9 @@ const UserSingIn = () => {
         }));
     };
 
-    const onSubmitHandler = e => {
+    const onSubmitHandler = async e => {
         e.preventDefault();
-        dispatch(loginUser('/users/session', {...user}));
-        setTimeout(()=>{
-            history.push('/');
-        },2000);
+        await dispatch(loginUser('/users/session', {...user}));
     };
 
     return (
@@ -76,6 +73,14 @@ const UserSingIn = () => {
                    </Alert>
                </Grid>
            )}
+               {loggedUser.message && (
+                   <Grid item className={classes.errorAlert}>
+                       <Alert severity="success">
+                           <AlertTitle>Success</AlertTitle>
+                           {loggedUser.message}
+                       </Alert>
+                   </Grid>
+               )}
                <FormInput
                    name={'username'}
                    label={'Username'}

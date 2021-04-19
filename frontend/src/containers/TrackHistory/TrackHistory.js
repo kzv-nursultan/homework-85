@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getTrackHistory} from "../../store/actions/trackHistoryActions";
 import HistoryList from "../../components/HistoryList/HistoryList";
 import {makeStyles} from "@material-ui/core/styles";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles({
     tracksList:{
@@ -15,25 +16,29 @@ const useStyles = makeStyles({
 const TrackHistory = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const history = useSelector(state=>state.history.history);
+    const history = useHistory();
+    const newHistory = useSelector(state=>state.history.history);
     const user = useSelector(state=> state.users.loginUser.user);
+
+    let trackHistory = user ? 'No tracks yet.' : 'Unauthorized User! Please Sign In!'
 
     useEffect(  ()=>{
         const fetchData = async () => {
             if (user) {
                 await dispatch(getTrackHistory(user.token));
-            };
+            } else {
+                setTimeout(()=>{
+                    history.push('/login');
+                },2000);
+            }
         };
         fetchData().catch(error=>console.error(error));
-    },[dispatch, user]);
-
-    let trackHistory = 'No tracks yet.'
+    },[dispatch, user, history]);
 
     if (user) {
-        trackHistory = user.username
-        if(history.length>0) {
+        if(newHistory.length>0) {
             trackHistory = (
-               history.map(object=>(
+               newHistory.map(object=>(
                    <HistoryList
                    key = {object._id}
                    trackName={object.track.name}

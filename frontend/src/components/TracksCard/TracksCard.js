@@ -38,7 +38,7 @@ const TracksCard = ({name, duration, number, id, album}) => {
 
     useEffect(()=>{
         const fetchData = async () => {
-            dispatch(getAlbumById(album));
+            await dispatch(getAlbumById(album));
         };
         fetchData().catch(error=>console.error(error));
     },[dispatch, album]);
@@ -46,7 +46,6 @@ const TracksCard = ({name, duration, number, id, album}) => {
     const listenBtnHandler = async () => {
         dispatch(postTrackHistory({track:id, artist:artist.artist}, user.token));
     };
-
     return (
         <Card className={classes.root} variant="outlined">
             <CardContent>

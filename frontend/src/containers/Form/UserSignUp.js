@@ -6,7 +6,8 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Button from "@material-ui/core/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {postUser} from "../../store/actions/UsersActions";
-import {NavLink, useHistory} from "react-router-dom";
+import {NavLink} from "react-router-dom";
+import {Alert, AlertTitle} from "@material-ui/lab";
 
 const useStyles = makeStyles({
     formBlock: {
@@ -32,13 +33,12 @@ const useStyles = makeStyles({
 const UserSingUp = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const history = useHistory();
     const [user, setUser] = useState({
         username:'',
         password:''
     });
-
     const error = useSelector(state => state.users.error);
+    const newUser = useSelector(state=>state.users.data)
 
     const onChangeHandler = e => {
         const {name, value} = e.target;
@@ -57,14 +57,9 @@ const UserSingUp = () => {
         };
     };
 
-    const onSubmitHandler = e => {
+    const onSubmitHandler = async e => {
         e.preventDefault();
-        dispatch(postUser('/users', {...user}));
-        if (getFieldError("username")) {
-            setTimeout(() => {
-                history.push('/');
-            }, 1500);
-        };
+        await dispatch(postUser('/users', {...user}));
     };
 
     return (
@@ -75,6 +70,14 @@ const UserSingUp = () => {
                 <strong>sign up</strong>
             </Typography>
             <form onSubmit={onSubmitHandler} className={classes.formBlock}>
+                {newUser._id && (
+                    <Grid item className={classes.errorAlert}>
+                        <Alert severity="success">
+                            <AlertTitle>Success</AlertTitle>
+                            You have successfully registered!
+                        </Alert>
+                    </Grid>
+                )}
                 <FormInput
                     name='username'
                     label='Username'

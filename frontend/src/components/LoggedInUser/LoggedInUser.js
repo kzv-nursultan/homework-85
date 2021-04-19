@@ -24,7 +24,7 @@ const LoggedInUser = ({username}) => {
     };
 
     const historyHandler = () => {
-        history.push('track_history');
+        history.push('/track_history');
     };
 
     return (
