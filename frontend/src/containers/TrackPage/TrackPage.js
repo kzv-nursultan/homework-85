@@ -96,7 +96,8 @@ const TrackPage = props => {
                    name={track.name}
                    duration={track.duration}
                    number={i+=1}
-                   album={props.match.params.id}/>
+                   album={props.match.params.id}
+                   video={track.video}/>
            ))
        );
     };

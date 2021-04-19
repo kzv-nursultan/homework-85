@@ -16,6 +16,9 @@ const NewSchema = new Schema({
         type:String,
         required:true
     },
+    video:{
+        type:String,
+    }
 });
 
 NewSchema.plugin(AutoIncrement,{inc_field:'number'});

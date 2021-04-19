@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,6 +8,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import {useDispatch, useSelector} from "react-redux";
 import {postTrackHistory} from "../../store/actions/trackHistoryActions";
 import {getAlbumById} from "../../store/actions/AlbumsActions";
+import SimpleModal from "../UI/SimpleModal/SimpleModal";
 
 const useStyles = makeStyles({
     root: {
@@ -30,11 +31,12 @@ const useStyles = makeStyles({
     }
 });
 
-const TracksCard = ({name, duration, number, id, album}) => {
+const TracksCard = ({name, duration, number, id, album, video}) => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const user = useSelector(state=>state.users.loginUser.user);
     const artist = useSelector(state=>state.albums.albumById);
+    const [open, setOpen] = useState(false);
 
     useEffect(()=>{
         const fetchData = async () => {
@@ -46,6 +48,11 @@ const TracksCard = ({name, duration, number, id, album}) => {
     const listenBtnHandler = async () => {
         dispatch(postTrackHistory({track:id, artist:artist.artist}, user.token));
     };
+
+    const watchVideoBtn = () => {
+        setOpen(!open)
+    };
+
     return (
         <Card className={classes.root} variant="outlined">
             <CardContent>
@@ -68,6 +75,13 @@ const TracksCard = ({name, duration, number, id, album}) => {
                     disabled={user ? false : true}>
                 Listen
             </Button>
+            {video && (
+                <Button variant='contained' color='secondary'
+                        onClick={watchVideoBtn} disabled={user ? false : true}>
+                    Watch video
+                </Button>
+            )}
+            <SimpleModal video={video} open={open} onClose={watchVideoBtn}/>
         </Card>
     );
 };
