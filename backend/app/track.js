@@ -1,5 +1,6 @@
 const express = require('express');
 const TrackSchema = require('../models/Track');
+const ArtistSchema = require('../models/Artist');
 const router = express.Router();
 
 router.get('/', async (req,res)=>{

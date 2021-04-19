@@ -1,17 +1,30 @@
 import React, {useEffect} from 'react';
-import {Grid} from "@material-ui/core";
+import {Grid, Typography} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {getTrackHistory} from "../../store/actions/trackHistoryActions";
+import HistoryList from "../../components/HistoryList/HistoryList";
+import {makeStyles} from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+    tracksList:{
+        textAlign:'center',
+        flexDirection:'column'
+    }
+})
 
 const TrackHistory = () => {
     const dispatch = useDispatch();
+    const classes = useStyles();
     const history = useSelector(state=>state.history.history);
     const user = useSelector(state=> state.users.loginUser.user);
 
-    useEffect(()=>{
-        if (user) {
-            dispatch(getTrackHistory(user._id));
+    useEffect(  ()=>{
+        const fetchData = async () => {
+            if (user) {
+                await dispatch(getTrackHistory(user.token));
+            };
         };
+        fetchData().catch(error=>console.error(error));
     },[dispatch, user]);
 
     let trackHistory = 'No tracks yet.'
@@ -20,14 +33,23 @@ const TrackHistory = () => {
         trackHistory = user.username
         if(history.length>0) {
             trackHistory = (
-                
+               history.map(object=>(
+                   <HistoryList
+                   key = {object._id}
+                   trackName={object.track.name}
+                   artistName={object.artist ? object.artist.name : 'no name in db'}
+                   dateTime={object.datetime}/>
+               ))
             )
-        }
+        };
     };
 
     return (
         <Grid container>
-            <Grid item>
+            <Grid item container className={classes.tracksList}>
+                <Typography variant='h4'>
+                    Your History:
+                </Typography>
                 {trackHistory}
             </Grid>
         </Grid>

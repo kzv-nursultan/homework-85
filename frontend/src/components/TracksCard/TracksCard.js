@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -7,6 +7,7 @@ import {Button} from "@material-ui/core";
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import {useDispatch, useSelector} from "react-redux";
 import {postTrackHistory} from "../../store/actions/trackHistoryActions";
+import {getAlbumById} from "../../store/actions/AlbumsActions";
 
 const useStyles = makeStyles({
     root: {
@@ -29,13 +30,21 @@ const useStyles = makeStyles({
     }
 });
 
-const TracksCard = ({name, duration, number, id}) => {
+const TracksCard = ({name, duration, number, id, album}) => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const user = useSelector(state=>state.users.loginUser.user);
+    const artist = useSelector(state=>state.albums.albumById);
+
+    useEffect(()=>{
+        const fetchData = async () => {
+            dispatch(getAlbumById(album));
+        };
+        fetchData().catch(error=>console.error(error));
+    },[dispatch, album]);
 
     const listenBtnHandler = async () => {
-        dispatch(postTrackHistory({track:id}, user.token));
+        dispatch(postTrackHistory({track:id, artist:artist.artist}, user.token));
     };
 
     return (

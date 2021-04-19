@@ -16,6 +16,10 @@ const TrackHistory = new Schema({
         type:String,
         required:true,
     },
+    artist:{
+        type:Schema.Types.ObjectId,
+        ref:'ArtistSchema'
+    }
 });
 
 TrackHistory.methods.currentTime = function() {

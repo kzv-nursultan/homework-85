@@ -15,7 +15,7 @@ const NewSchema = new Schema({
     duration:{
         type:String,
         required:true
-    }
+    },
 });
 
 NewSchema.plugin(AutoIncrement,{inc_field:'number'});

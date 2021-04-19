@@ -32,11 +32,15 @@ export const postTrackHistory = (data, token) => {
     };
 };
 
-export const getTrackHistory = (id) => {
+export const getTrackHistory = token => {
     return async dispatch => {
         try {
             dispatch(getTrackHistoryRequest());
-            const response = await axiosUrl.get('/track_history/'+id);
+            const response = await axiosUrl.get('/track_history/', {
+                headers:{
+                    'Authorization': token
+                }
+            });
             dispatch(getTrackHistorySuccess(response.data));
         } catch (error) {
             if (error.response && error.response.data) {

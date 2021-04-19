@@ -30,6 +30,7 @@ const TrackPage = props => {
     const classes = useStyles();
     const history = useHistory();
     const tracks = useSelector(state=>state.tracks.data);
+    const artist = useSelector(state => state.albums);
     const url = 'http://localhost:8000/tracks?album=' + props.match.params.id;
 
     useEffect(()=>{
@@ -46,11 +47,14 @@ const TrackPage = props => {
 
     let artistInfo = 'no info';
 
-    if(tracks[0]) {
+    if(tracks[0] && artist.albumById.artist) {
          artistInfo = (
             <Grid>
                 <Typography variant='h4' gutterBottom>
                     Albums name: <br/> <strong>{tracks[0].album.name}</strong>
+                </Typography>
+                <Typography variant='h4' gutterBottom>
+                    Artist name: <br/> <strong>{artist.albumById.artist.name}</strong>
                 </Typography>
             </Grid>
         );
@@ -91,7 +95,8 @@ const TrackPage = props => {
                    id={track._id}
                    name={track.name}
                    duration={track.duration}
-                   number={i+=1}/>
+                   number={i+=1}
+                   album={props.match.params.id}/>
            ))
        );
     };

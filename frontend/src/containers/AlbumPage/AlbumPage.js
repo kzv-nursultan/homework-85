@@ -49,9 +49,12 @@ const AlbumPage = props => {
 
    if(albums[0]) {
        artistName = (
-           <Typography variant='h4' className={classes.nameBlock}>
-               Name: <strong>{albums[0].artist.name}</strong>
-           </Typography>
+           <Grid>
+               <Typography variant='h4' className={classes.nameBlock}>
+                   Name: <strong>{albums[0].artist.name}</strong>
+               </Typography>
+           </Grid>
+
        );
    };
 
