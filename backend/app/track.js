@@ -37,4 +37,14 @@ router.post('/', async (req, res)=>{
     }
 });
 
+router.delete('/:id', async (req, res)=>{
+    try {
+        await TrackSchema.findByIdAndDelete(req.params.id);
+        const data = await TrackSchema.find();
+        res.send(data);
+    } catch (error) {
+        res.status(500).send(error);
+    };
+});
+
 module.exports = router;

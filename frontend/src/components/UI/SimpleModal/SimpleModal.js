@@ -36,7 +36,7 @@ const SimpleModal = ({video, open, onClose}) => {
     const body = (
         <div style={modalStyle} className={classes.paper}>
             <iframe width="420" height="315" title='music video'
-                    src='https://www.youtube.com/embed/m4K4citMvc8?autoplay=1'>
+                    src={url}>
             </iframe>
         </div>
     );

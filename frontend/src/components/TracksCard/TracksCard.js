@@ -50,7 +50,12 @@ const TracksCard = ({name, duration, number, id, album, video}) => {
     };
 
     const watchVideoBtn = () => {
-        setOpen(!open)
+        setOpen(true);
+        dispatch(postTrackHistory({track:id, artist:artist.artist}, user.token));
+    };
+
+    const closeModal = () => {
+        setOpen(false);
     };
 
     return (
@@ -81,7 +86,7 @@ const TracksCard = ({name, duration, number, id, album, video}) => {
                     Watch video
                 </Button>
             )}
-            <SimpleModal video={video} open={open} onClose={watchVideoBtn}/>
+            <SimpleModal video={video} open={open} onClose={closeModal}/>
         </Card>
     );
 };

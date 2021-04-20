@@ -43,9 +43,7 @@ const LoggedInUser = ({username}) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
         >
-            <MenuItem>Profile</MenuItem>
             <MenuItem onClick={historyHandler}> History</MenuItem>
-            <MenuItem>Logout</MenuItem>
         </Menu>
         </>
     );
