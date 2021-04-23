@@ -16,13 +16,3 @@ const auth = async (req,res,next) => {
 };
 
 module.exports = auth;
-
-// const token = req.get('Authorization');
-// if(!token) {
-//     res.status(401).send({error:'token not found'});
-// };
-//
-// const user = await Users.findOne({token});
-// if(!user) {
-//     res.status(401).send({error:'Token is incorrect'});
-// };

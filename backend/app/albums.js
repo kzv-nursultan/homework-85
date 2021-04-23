@@ -49,7 +49,7 @@ router.post('/', upload.single('image'), async (req,res)=>{
     const data = req.body;
     if (data.name && data.artist && data.production_year) {
         if (req.file) {
-            data.image = req.file.filename;
+            data.image = '/uploads/' + req.file.filename;
         };
         const newAlbum = new AlbumSchema(data);
         try {

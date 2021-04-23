@@ -31,7 +31,7 @@ router.post('/', upload.single('image'), async (req,res) => {
     const data = req.body;
     if (data.name && data.info) {
         if (req.file) {
-            data.image = req.file.filename;
+            data.image = '/uploads/' + req.file.filename;
         };
         try {
            const newArtist = new ArtistScheme(data);

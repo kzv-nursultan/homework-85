@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require("mongoose");
 const exitHook = require('async-exit-hook');
+const config = require('./config');
 const artist = require('./app/artist');
 const albums = require('./app/albums');
 const track = require('./app/track');
@@ -22,8 +23,7 @@ app.use('/users', users);
 app.use('/track_history', trackHistory);
 
 const run = async () => {
-    const connection = await mongoose.connect('mongodb://localhost/musicapi',
-        { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false});
+    const connection = await mongoose.connect(config.db.url, config.db.options);
 
     app.listen(port, ()=>{
         console.log('server started on port ' + port);

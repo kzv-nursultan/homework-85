@@ -1,6 +1,7 @@
 const express = require('express');
 const User = require('../models/User');
 const bcrypt = require("bcrypt");
+const auth = require("../middleware/auth");
 const router = express.Router();
 
 router.get('/', async (req, res)=>{
@@ -45,14 +46,18 @@ router.post('/session', async (req,res) => {
     };
 });
 
-router.delete('/:id', async (req, res)=>{
-    try {
-       await User.findByIdAndDelete(req.params.id);
-       const users = await User.find();
-       res.send(users);
-    } catch (error){
-        res.status(400).send(error)
-    }
+router.delete('/session', auth, async (req, res)=>{
+    const token = req.get('Authorization');
+    const success = {message: 'Success!'};
+
+    if(!token) return res.send(success);
+
+    const user = await User.findOne({token});
+    if (!user) return res.send(success);
+
+    user.generateToken();
+    await user.save();
+    res.send(success);
 });
 
 module.exports = router;

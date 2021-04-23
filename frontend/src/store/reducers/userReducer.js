@@ -1,4 +1,5 @@
 import {
+    LOG_OUT,
     LOGIN_USER_FAILURE,
     LOGIN_USER_REQUEST,
     LOGIN_USER_SUCCESS,
@@ -30,6 +31,8 @@ export const usersReducer = (state = initialState, action) => {
             return {...state, loginUser: action.value, loginLoading: false};
         case LOGIN_USER_FAILURE:
             return {...state, loginError: action.error, loginLoading: false};
+        case LOG_OUT:
+            return {...state, loginUser: {}};
         default:
             return state;
     };

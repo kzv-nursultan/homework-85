@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 
 const ItemCard = ({image, year, name, moreBtn}) => {
     const classes = useStyles();
-    const photoUrl = 'http://localhost:8000/uploads/' + image;
+    const photoUrl = 'http://localhost:8000/' + image;
     const avatar = 'https://clipground.com/images/music-png-logo-3.png'
 
     return (
