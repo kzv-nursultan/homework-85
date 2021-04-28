@@ -35,6 +35,10 @@ const LoggedInUser = ({username}) => {
         history.push('/');
     };
 
+    const addHandler = () => {
+        history.push('/add');
+    };
+
     return (
         <>
         <Button
@@ -51,8 +55,9 @@ const LoggedInUser = ({username}) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
         >
-            <MenuItem onClick={historyHandler}> History </MenuItem>
             <MenuItem onClick={logOutHandler}> Log Out </MenuItem>
+            <MenuItem onClick={historyHandler}> History </MenuItem>
+            <MenuItem onClick={addHandler}> Add Publication </MenuItem>
         </Menu>
         </>
     );

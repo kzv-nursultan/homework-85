@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, TextField} from "@material-ui/core";
+import {Grid, MenuItem, TextField} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import PropTypes from 'prop-types';
 
@@ -7,37 +7,42 @@ const useStyles = makeStyles({
     fieldBlock: {
         margin: '15px auto',
         textAlign: 'center',
-        maxWidth: 400
+        maxWidth: 400,
     }
 });
 
-const FormInput = ({name, label, onChange, value, required, type, error,helperText}) => {
+const FormInput = ({select, error, options, ...props}) => {
     const classes = useStyles();
+    let inputChildren = null;
+
+    if (select) {
+        inputChildren = options.map(option=>(
+          <MenuItem key={option._id} value={option._id}>
+              {option.name}
+          </MenuItem>
+        ))
+    }
+
     return (
-        <Grid container item className={classes.fieldBlock}>
-            <TextField
-            name={name}
-            label={label}
-            onChange={onChange}
-            value={value}
-            required={required}
+      <Grid container item className={classes.fieldBlock}>
+          <TextField
             variant="outlined"
-            type={type}
+            select={select}
             error={error}
-            helperText={helperText}
-            fullWidth={true}/>
-        </Grid>
+            helperText={error}
+            fullWidth
+            {...props}
+          >
+              {inputChildren}
+          </TextField>
+      </Grid>
     );
 }
 FormInput.propTypes = {
-    name: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-    value: PropTypes.string.isRequired,
-    required: PropTypes.bool,
-    type:PropTypes.string,
-    error:PropTypes.bool,
-    helperText:PropTypes.string
+    ...TextField.propTypes,
+    select: PropTypes.bool,
+    error: PropTypes.bool,
+    options: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default FormInput;

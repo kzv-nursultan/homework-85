@@ -25,15 +25,15 @@ router.get('/', async (req,res)=>{
             res.send(data);
         } catch (e) {
             res.status(400).send(e);
-        };
+        }
     } else {
         try {
             const data = await AlbumSchema.find();
             res.send(data);
         } catch (e) {
             res.send(500).send(e);
-        };
-    };
+        }
+    }
 });
 
 router.get('/:id', async (req,res)=>{
@@ -42,7 +42,7 @@ router.get('/:id', async (req,res)=>{
         res.send(data);
     } catch (e) {
         res.status(404).send('Not Found');
-    };
+    }
 });
 
 router.post('/', upload.single('image'), async (req,res)=>{
@@ -50,7 +50,7 @@ router.post('/', upload.single('image'), async (req,res)=>{
     if (data.name && data.artist && data.production_year) {
         if (req.file) {
             data.image = '/uploads/' + req.file.filename;
-        };
+        }
         const newAlbum = new AlbumSchema(data);
         try {
             await newAlbum.save();
@@ -60,7 +60,7 @@ router.post('/', upload.single('image'), async (req,res)=>{
         }
     } else {
         res.status(400).send('Bad Request');
-    };
+    }
 });
 
 module.exports = router;

@@ -17,7 +17,13 @@ const NewSchema = new Schema({
     },
     image:{
         type:String
-    }
+    },
+    published: {
+        type: Boolean,
+        required: true,
+        default: false,
+        enum: [true, false]
+    },
 });
 
 const AlbumSchema = mongoose.model('AlbumSchema', NewSchema);

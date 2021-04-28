@@ -60,16 +60,78 @@ const run = async () => {
         album: Symphonicities,
         duration:'4:23',
         video:'https://www.youtube.com/embed/d27gTrPPAyk'
+    }, {
+        name: "Mona",
+        album: TheRollingStones,
+        duration: '2:30'
+    },{
+        name: "I Just Want to Make Love to You",
+        album: TheRollingStones,
+        duration: '2:30'
+    }, {
+        name: "Honest I Do",
+        album: TheRollingStones,
+        duration: '2:30',
+    }, {
+        name:	"Little by Little",
+        album: TheRollingStones,
+        duration: '2:30'
+    }, {
+        name: "Carol",
+        album: TheRollingStones,
+        duration: '2:30',
+    }, {
+        name:	"White Christmas",
+        album: ElvisChristmasAlbum,
+        duration: '2:30'
+    }, {
+        name:	"Here Comes Santa Claus",
+        album: ElvisChristmasAlbum,
+        duration: '2:30'
+    }, {
+        name:	"Blue Christmas",
+        album: ElvisChristmasAlbum,
+        duration: '2:30'
+    }, {
+        name: "Silent Night",
+        album: ElvisChristmasAlbum,
+        duration: '2:30',
+    }, {
+        name:	"I Believe",
+        album: ElvisChristmasAlbum,
+        duration: "2:30"
+    }, {
+        name: "Next to You",
+        album: Symphonicities,
+        duration: "2:30",
+    }, {
+        name: "Englishman in New York",
+        album: Symphonicities,
+        duration: '4:23'
+    }, {
+        name: "I Hung My Head",
+        album: Symphonicities,
+        duration: '3:00',
+    }, {
+        name: "You Will Be My Ain True Love",
+        album: Symphonicities,
+        duration: '3:00'
+    }, {
+        name: "Roxanne",
+        album: Symphonicities,
+        duration: '2:30'
     });
 
     const [user1, user2] = await User.create({
-        username: 'user1',
-        password: 'user1',
+        username: 'admin',
+        password: 'admin',
         token: nanoid(),
+        role: 'admin'
     }, {
-        username: 'user2',
-        password: 'user2',
+        username: 'user',
+        password: 'user',
         token: nanoid(),
+        role: 'user',
     });
 
     await TrackHistory.create({

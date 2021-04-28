@@ -5,6 +5,7 @@ import {trackReducer} from "./reducers/trackReducer";
 import {usersReducer} from "./reducers/userReducer";
 import {trackHistoryReducer} from "./reducers/trackHistoryReducer";
 import thunk from "redux-thunk";
+import axiosUrl from "../axiosUrl";
 
 const saveToLocalStorage = state => {
     try {
@@ -43,6 +44,15 @@ store.subscribe(()=>{
     saveToLocalStorage({
         users: store.getState().users
     });
+});
+
+axiosUrl.interceptors.request.use(config=>{
+    try {
+        config.headers['Authorization'] = store.getState().users.loginUser?.user.token;
+    } catch (e) {
+        //no token exist
+    }
+    return config;
 });
 
 export default store;

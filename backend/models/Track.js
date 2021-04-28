@@ -18,6 +18,12 @@ const NewSchema = new Schema({
     },
     video:{
         type:String,
+    },
+    published: {
+        type: Boolean,
+        required: true,
+        default: false,
+        enum: [true, false]
     }
 });
 
