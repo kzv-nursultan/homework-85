@@ -20,11 +20,10 @@ const NewSchema = new Schema({
         type:String,
     },
     published: {
-        type: Boolean,
+        type: String,
         required: true,
         default: false,
-        enum: [true, false]
-    }
+    },
 });
 
 NewSchema.plugin(AutoIncrement,{inc_field:'number'});

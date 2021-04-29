@@ -12,4 +12,4 @@ const permit = (...role) => {
     }
 };
 
-module.export = permit;
+module.exports = permit;

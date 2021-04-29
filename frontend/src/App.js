@@ -9,6 +9,9 @@ import UserSignUp from "./containers/Form/UserSignUp";
 import TrackHistory from "./containers/TrackHistory/TrackHistory";
 import AddPublication from "./containers/Form/AddPublication";
 import {useSelector} from "react-redux";
+import AddArtist from "./containers/Form/AddArtist";
+import AddAlbum from "./containers/Form/AddAlbum";
+import AddTrack from "./containers/Form/AddTrack";
 
 const App = () => {
 
@@ -42,6 +45,31 @@ const App = () => {
           isAllowed={user && user.role === 'user'}
           redirectTo='/login'
           />
+
+        <ProtectedRoute
+          path='/add_artist'
+          exact
+          component={AddArtist}
+          isAllowed={user && user.role === 'user'}
+          redirectTo='/login'
+        />
+
+      <ProtectedRoute
+        path='/add_album'
+        exact
+        component={AddAlbum}
+        isAllowed={user && user.role === 'user'}
+        redirectTo='/login'
+      />
+
+      <ProtectedRoute
+        path='/add_track'
+        exact
+        component={AddTrack}
+        isAllowed={user && user.role === 'user'}
+        redirectTo='/login'
+      />
+
     </Switch>
   </BrowserRouter>
   );

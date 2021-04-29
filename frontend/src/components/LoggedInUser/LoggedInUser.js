@@ -1,5 +1,5 @@
 import React from 'react';
-import {useHistory} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import Button from "@material-ui/core/Button";
 import {Menu, MenuItem} from "@material-ui/core";
@@ -26,17 +26,9 @@ const LoggedInUser = ({username}) => {
         setAnchorEl(null);
     };
 
-    const historyHandler = () => {
-        history.push('/track_history');
-    };
-
     const logOutHandler = async () => {
         await dispatch(logOut());
         history.push('/');
-    };
-
-    const addHandler = () => {
-        history.push('/add');
     };
 
     return (
@@ -56,8 +48,10 @@ const LoggedInUser = ({username}) => {
             onClose={handleClose}
         >
             <MenuItem onClick={logOutHandler}> Log Out </MenuItem>
-            <MenuItem onClick={historyHandler}> History </MenuItem>
-            <MenuItem onClick={addHandler}> Add Publication </MenuItem>
+            <MenuItem component={Link} to='/track_history'> History </MenuItem>
+            <MenuItem component={Link} to='/add_artist'>Add Artist</MenuItem>
+            <MenuItem component={Link} to='/add_album'>Add Album</MenuItem>
+            <MenuItem component={Link} to='/add_track'>Add Track</MenuItem>
         </Menu>
         </>
     );

@@ -15,7 +15,10 @@ router.get('/', async (req, res)=>{
 
 router.post('/', async (req,res)=>{
     try {
-        const user = new User(req.body);
+        const user = new User({
+            username: req.body.username,
+            password: req.body.password,
+        });
         await user.save();
         res.send(user);
     } catch (error){

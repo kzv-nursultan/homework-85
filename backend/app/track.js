@@ -24,6 +24,7 @@ router.get('/', async (req,res)=>{
 
 router.post('/', async (req, res)=>{
     const data = req.body;
+    console.log(data);
     if (data.name && data.album && data.duration) {
         try {
             const newTrack = new TrackSchema(data);

@@ -28,6 +28,9 @@ const useStyles = makeStyles({
     },
     listenBtn: {
         margin: '5px auto'
+    },
+    videoBtn: {
+        margin: 5,
     }
 });
 
@@ -81,8 +84,11 @@ const TracksCard = ({name, duration, number, id, album, video}) => {
                 Listen
             </Button>
             {video && (
-                <Button variant='contained' color='secondary'
-                        onClick={watchVideoBtn} disabled={user ? false : true}>
+                <Button variant='contained'
+                        className={classes.videoBtn}
+                        color='secondary'
+                        onClick={watchVideoBtn}
+                        disabled={user ? false : true}>
                     Watch video
                 </Button>
             )}

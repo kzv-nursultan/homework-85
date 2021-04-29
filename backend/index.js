@@ -7,6 +7,7 @@ const artist = require('./app/artist');
 const albums = require('./app/albums');
 const track = require('./app/track');
 const users = require('./app/users');
+const publish = require('./app/publish');
 const trackHistory = require('./app/track_history');
 const app = express();
 
@@ -21,6 +22,7 @@ app.use('/albums', albums);
 app.use('/tracks', track);
 app.use('/users', users);
 app.use('/track_history', trackHistory);
+app.use('/publish', publish);
 
 const run = async () => {
     const connection = await mongoose.connect(config.db.url, config.db.options);

@@ -32,7 +32,7 @@ export const usersReducer = (state = initialState, action) => {
         case LOGIN_USER_FAILURE:
             return {...state, loginError: action.error, loginLoading: false};
         case LOG_OUT:
-            return {... initialState};
+            return {...initialState};
         default:
             return state;
     };
