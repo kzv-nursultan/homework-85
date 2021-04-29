@@ -19,7 +19,8 @@ const run = async () => {
     const [RollingStones, Elvis, Sting] = await Artist.create({
         name:"Rolling Stones",
         info:"The Rolling Stones are an English rock band formed in London in 1962",
-        image:"/fixtures/rollings.jpg"
+        image:"/fixtures/rollings.jpg",
+        published: true,
     }, {
         name: "Elvis Presley",
         info: "He is regarded as one of the most significant cultural icons of the 20th century",
@@ -34,7 +35,8 @@ const run = async () => {
         name: 'The Rolling Stones',
         artist: RollingStones,
         production_year: '1964',
-        image: '/fixtures/rollingAlbum.jpg'
+        image: '/fixtures/rollingAlbum.jpg',
+        published: true
     }, {
         name:'Elvis Christmas Album',
         artist:Elvis,
@@ -50,7 +52,8 @@ const run = async () => {
     const [Route66, BlueChristmas, Englishman] = await Track.create({
         name:'Route 66',
         album: TheRollingStones,
-        duration:'2:20'
+        duration:'2:20',
+        published: true
     }, {
         name: 'Blue Christmas',
         album: ElvisChristmasAlbum,
@@ -75,7 +78,8 @@ const run = async () => {
     }, {
         name:	"Little by Little",
         album: TheRollingStones,
-        duration: '2:30'
+        duration: '2:30',
+        published: true
     }, {
         name: "Carol",
         album: TheRollingStones,

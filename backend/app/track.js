@@ -24,9 +24,8 @@ router.get('/', async (req,res)=>{
     };
 });
 
-router.post('/', async (req, res)=>{
+router.post('/', auth, permit('user', 'admin'), async (req, res)=>{
     const data = req.body;
-    console.log(data);
     if (data.name && data.album && data.duration) {
         try {
             const newTrack = new TrackSchema(data);
@@ -40,11 +39,9 @@ router.post('/', async (req, res)=>{
     }
 });
 
-router.delete('/:id', async (req, res)=>{
+router.delete('/:id', auth, permit('admin'), async (req, res)=>{
     try {
         await TrackSchema.findByIdAndDelete(req.params.id);
-        //const data = await TrackSchema.find();
-        //res.send(data);
         res.sendStatus(200);
     } catch (error) {
         res.status(500).send(error);

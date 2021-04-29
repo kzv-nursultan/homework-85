@@ -50,7 +50,7 @@ router.get('/:id', async (req,res)=>{
 router.post('/', auth, permit('user', 'admin'), upload.single('image'), async (req,res)=>{
     const data = req.body;
     if (data.name && data.artist && data.production_year) {
-        if (req.file) {
+        if (req?.file) {
             data.image = '/uploads/' + req.file.filename;
         }
         const newAlbum = new AlbumSchema(data);
