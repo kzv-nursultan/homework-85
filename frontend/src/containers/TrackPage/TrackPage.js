@@ -95,6 +95,8 @@ const TrackPage = props => {
                    id={track._id}
                    name={track.name}
                    duration={track.duration}
+                   published={track.published}
+                   path = {url}
                    number={i+=1}
                    album={props.match.params.id}
                    video={track.video}/>

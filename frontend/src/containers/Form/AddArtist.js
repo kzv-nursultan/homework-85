@@ -48,7 +48,6 @@ const AddArtist = () => {
     ));
 
     dispatch(postArtists(formData));
-    console.log(artist);
   };
 
   return (

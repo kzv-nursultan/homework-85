@@ -1,6 +1,8 @@
 const express = require('express');
 const TrackSchema = require('../models/Track');
 const ArtistSchema = require('../models/Artist');
+const auth = require("../middleware/auth");
+const permit = require("../middleware/permit");
 const router = express.Router();
 
 router.get('/', async (req,res)=>{
@@ -41,11 +43,21 @@ router.post('/', async (req, res)=>{
 router.delete('/:id', async (req, res)=>{
     try {
         await TrackSchema.findByIdAndDelete(req.params.id);
-        const data = await TrackSchema.find();
-        res.send(data);
+        //const data = await TrackSchema.find();
+        //res.send(data);
+        res.sendStatus(200);
     } catch (error) {
         res.status(500).send(error);
     };
 });
+
+router.patch('/:id', auth, permit('user', 'admin'), async (req, res)=>{
+    try {
+        await TrackSchema.findByIdAndUpdate(req.params.id, req.body);
+        res.status(200).send({message: 'Success'});
+    } catch (e) {
+        res.status(500).send(e);
+    }
+})
 
 module.exports = router;

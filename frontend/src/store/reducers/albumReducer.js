@@ -1,10 +1,12 @@
 import {
+    DELETE_ALBUM_FAILURE,
+    DELETE_ALBUM_REQUEST, DELETE_ALBUM_SUCCESS,
     FETCH_ALBUMS_FAILURE,
     FETCH_ALBUMS_REQUEST,
     FETCH_ALBUMS_SUCCESS,
     GET_ALBUM_BY_ID_FAILURE,
     GET_ALBUM_BY_ID_REQUEST,
-    GET_ALBUM_BY_ID_SUCCESS,
+    GET_ALBUM_BY_ID_SUCCESS, PATCH_ALBUM_FAILURE, PATCH_ALBUM_REQUEST, PATCH_ALBUM_SUCCESS,
     POST_ALBUM_FAILURE,
     POST_ALBUM_REQUEST,
     POST_ALBUM_SUCCESS
@@ -16,7 +18,9 @@ const initialState = {
     error:null,
     albumById:{},
     albumByIdError:null,
-    postStatus: null
+    postStatus: null,
+    patchStatus:null,
+    deleteStatus: null,
 }
 
 export const albumReducer = (state = initialState, action) => {
@@ -39,6 +43,18 @@ export const albumReducer = (state = initialState, action) => {
             return {...state, postStatus: action.value, loading: false};
         case POST_ALBUM_FAILURE:
             return {...state, postStatus: action.error, loading: false};
+        case PATCH_ALBUM_REQUEST:
+            return {...state, loading: true};
+        case PATCH_ALBUM_SUCCESS:
+            return {...state, patchStatus: action.value, loading: false};
+        case PATCH_ALBUM_FAILURE:
+            return {...state, patchStatus: action.error, loading: false};
+        case DELETE_ALBUM_REQUEST:
+            return {...state, loading: true};
+        case DELETE_ALBUM_SUCCESS:
+            return {...state, deleteStatus: action.value, loading: false};
+        case DELETE_ALBUM_FAILURE:
+            return {...state, deleteStatus: action.error, loading: false};
         default:
             return state;
     };

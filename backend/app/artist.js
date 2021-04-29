@@ -4,6 +4,8 @@ const path = require("path");
 const {nanoid} = require("nanoid");
 const config = require("../config");
 const ArtistScheme = require('../models/Artist');
+const auth = require("../middleware/auth");
+const permit = require("../middleware/permit");
 
 const storage = multer.diskStorage({
    destination: (req, file, cb) => {
@@ -27,7 +29,7 @@ router.get('/', async (req,res)=>{
     }
 });
 
-router.post('/', upload.single('image'), async (req,res) => {
+router.post('/', auth, permit('user', 'admin'), upload.single('image'), async (req,res) => {
     const data = req.body;
     if (data.name && data.info) {
         if (req.file) {
@@ -44,5 +46,23 @@ router.post('/', upload.single('image'), async (req,res) => {
         res.status(400).send('Bad request');
     }
 });
+
+router.patch('/:id', auth, permit('admin'), async (req, res)=>{
+  try {
+    await ArtistScheme.findByIdAndUpdate(req.params.id, req.body);
+    res.send({message: 'Published!'});
+  } catch (e) {
+    res.status(400).send('wrong')
+  }
+});
+
+router.delete('/:id', auth, permit('admin'), async (req, res)=>{
+  try {
+    await ArtistScheme.findByIdAndDelete(req.params.id);
+    res.sendStatus(200);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+})
 
 module.exports = router;

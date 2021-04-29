@@ -19,7 +19,7 @@ const NewSchema = new Schema({
         type:String
     },
     published: {
-        type: String,
+        type: Boolean,
         required: true,
         default: false,
     },

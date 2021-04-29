@@ -1,4 +1,5 @@
 import axiosUrl from "../../axiosUrl";
+import {NotificationManager} from "react-notifications";
 
 export const POST_USER_REQUEST = 'POST_USER_REQUEST';
 export const POST_USER_SUCCESS = 'POST_USER_SUCCESS';
@@ -59,6 +60,7 @@ export const logOut = () => {
                 }});
             dispatch({type: LOG_OUT});
         } catch (e) {
+            NotificationManager.error(e.message);
             console.error(e);
         }
     }

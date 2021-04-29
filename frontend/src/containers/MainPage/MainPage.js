@@ -34,8 +34,10 @@ const MainPage = () => {
        data.map(artist => (
            <ItemCard
            key = {artist._id}
+           id={artist._id}
            image = {artist.image}
            name = {artist.name}
+           published = {artist.published}
            moreBtn={()=>learnClick(artist._id)}
            />
        ))

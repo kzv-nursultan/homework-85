@@ -3,12 +3,16 @@ import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import {Button} from "@material-ui/core";
+import {Button, Grid} from "@material-ui/core";
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import {useDispatch, useSelector} from "react-redux";
 import {postTrackHistory} from "../../store/actions/trackHistoryActions";
 import {getAlbumById} from "../../store/actions/AlbumsActions";
 import SimpleModal from "../UI/SimpleModal/SimpleModal";
+import {patchTrack} from "../../store/actions/TracksAction";
+import {deleteTrack} from "../../store/actions/TracksAction";
+import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
 
 const useStyles = makeStyles({
     root: {
@@ -26,20 +30,31 @@ const useStyles = makeStyles({
     pos: {
         marginBottom: 12,
     },
+    btnBlock: {
+        display: 'flex',
+        flexDirection: 'column',
+        maxWidth: 200,
+        margin: '0 auto',
+    },
     listenBtn: {
-        margin: '5px auto'
+        margin: 5,
     },
     videoBtn: {
         margin: 5,
+    },
+    publish: {
+        color: 'green',
+        alignItems: 'center',
     }
 });
 
-const TracksCard = ({name, duration, number, id, album, video}) => {
+const TracksCard = ({name, duration, number, id, album, video, published, path}) => {
     const dispatch = useDispatch();
     const classes = useStyles();
     const user = useSelector(state=>state.users.loginUser.user);
     const artist = useSelector(state=>state.albums.albumById);
     const [open, setOpen] = useState(false);
+    const [trigger, setTrigger] = useState(false);
 
     useEffect(()=>{
         const fetchData = async () => {
@@ -61,8 +76,17 @@ const TracksCard = ({name, duration, number, id, album, video}) => {
         setOpen(false);
     };
 
+    const publishBtn = async () => {
+        await dispatch(patchTrack(id, path));
+        setTrigger(!trigger);
+    };
+
+    const deleteBtn = () => {
+        dispatch(deleteTrack(id));
+    };
+
     return (
-        <Card className={classes.root} variant="outlined">
+        <Card className={classes.root} variant="outlined" style={{display: published || user?.role === 'admin' ? 'block' : 'none'}}>
             <CardContent>
                 <Typography className={classes.title} color="textPrimary" gutterBottom>
                     Track Name:
@@ -77,21 +101,46 @@ const TracksCard = ({name, duration, number, id, album, video}) => {
                     Number:{number}
                 </Typography>
             </CardContent>
-            <Button variant="contained" color="primary"
-                    className={classes.listenBtn} endIcon={<PlayArrowIcon/>}
-                    onClick={listenBtnHandler}
-                    disabled={user ? false : true}>
-                Listen
-            </Button>
-            {video && (
-                <Button variant='contained'
-                        className={classes.videoBtn}
-                        color='secondary'
-                        onClick={watchVideoBtn}
-                        disabled={user ? false : true}>
-                    Watch video
-                </Button>
-            )}
+
+           <Grid item className={classes.btnBlock}>
+               { ['admin'].includes(user?.role) && (
+                 published ? <Typography variant='h6' className={classes.publish}>
+                       Published <DoneOutlineIcon/>
+                   </Typography> :
+                   <Button variant='contained'
+                           color='secondary'
+                           onClick={publishBtn}>
+                       Publish
+                   </Button>
+               )}
+
+               <Button variant="contained" color="primary"
+                       className={classes.listenBtn} endIcon={<PlayArrowIcon/>}
+                       onClick={listenBtnHandler}
+                       disabled={user ? false : true}>
+                   Listen
+               </Button>
+
+               {video && (
+                 <Button variant='contained'
+                         className={classes.videoBtn}
+                         color='inherit'
+                         onClick={watchVideoBtn}
+                         disabled={user ? false : true}>
+                     Watch video
+                 </Button>
+               )}
+
+               {['admin'].includes(user?.role) && (
+                 <Button variant='contained'
+                         color='secondary'
+                         onClick={deleteBtn}
+                         endIcon={<HighlightOffIcon/>}>
+                     <strong>Delete</strong>
+                 </Button>
+               )}
+           </Grid>
+
             <SimpleModal video={video} open={open} onClose={closeModal}/>
         </Card>
     );

@@ -62,7 +62,10 @@ const AlbumPage = props => {
        albums.map(album=>(
            <ItemCard
            key = {album._id}
+           id={album._id}
+           artist_id={id}
            name = {album.name}
+           published={album.published}
            year = {album.production_year}
            image = {album.image}
            moreBtn={()=>moreBtn(album._id)}/>

@@ -4,6 +4,8 @@ const path = require("path");
 const {nanoid} = require("nanoid");
 const config = require('../config');
 const AlbumSchema = require("../models/Album");
+const auth = require("../middleware/auth");
+const permit = require("../middleware/permit");
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -45,7 +47,7 @@ router.get('/:id', async (req,res)=>{
     }
 });
 
-router.post('/', upload.single('image'), async (req,res)=>{
+router.post('/', auth, permit('user', 'admin'), upload.single('image'), async (req,res)=>{
     const data = req.body;
     if (data.name && data.artist && data.production_year) {
         if (req.file) {
@@ -60,6 +62,24 @@ router.post('/', upload.single('image'), async (req,res)=>{
         }
     } else {
         res.status(400).send('Bad Request');
+    }
+});
+
+router.patch('/:id', auth, permit('admin'), async (req, res)=>{
+    try {
+        await AlbumSchema.findByIdAndUpdate(req.params.id, req.body);
+        res.status(200).send({message:'Published!'});
+    } catch (e) {
+        res.send(e);
+    }
+});
+
+router.delete('/:id', auth, permit('admin'), async (req, res)=>{
+    try {
+        await AlbumSchema.findByIdAndDelete(req.params.id);
+        res.sendStatus(200);
+    } catch (e) {
+        res.status(400).send(e);
     }
 });
 

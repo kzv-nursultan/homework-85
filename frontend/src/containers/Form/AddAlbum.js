@@ -49,7 +49,6 @@ const AddAlbum = () => {
 
   const onSubmitHandler = async e => {
     e.preventDefault();
-    console.log(album);
     const formData = new FormData();
     Object.keys(album).map(key=>(
       formData.append(key, album[key])

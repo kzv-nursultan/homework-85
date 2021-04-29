@@ -43,10 +43,6 @@ const AddTrack = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    // const formData = new FormData();
-    // Object.keys(track).map(key=>(
-    //   formData.append(key, formData[key])
-    // ));
     dispatch(postTrack({...track}));
   } ;
 
