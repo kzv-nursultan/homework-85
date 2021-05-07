@@ -5,7 +5,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import {useDispatch} from "react-redux";
 import {facebookLogin} from "../../../store/actions/UsersActions";
 
-const LoginFacebook = ({cbHandler, title}) => {
+const LoginFacebook = () => {
   const dispatch = useDispatch();
 
   const callbackHandler = (response) => {
