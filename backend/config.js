@@ -12,5 +12,9 @@ module.exports = {
             useCreateIndex: true,
             useFindAndModify: false,
         },
+    },
+    facebook: {
+        appId: '3969091523169875',
+        appSecret: '25c0fff247ee2877ebb711ea4f5c3fdc',
     }
 };

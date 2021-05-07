@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     navs: {
         display:'flex',
-        maxWidth: 140,
+        maxWidth: 190,
         flexGrow: 1,
         justifyContent: 'space-around',
         alignItems:'center',
@@ -47,7 +47,7 @@ const ButtonAppBar = () => {
                         <NavLink to='/' className={classes.links}> <strong> MusicApi </strong></NavLink>
                     </Typography>
                    <Grid item className={classes.navs}>
-                       {user ? (<LoggedInUser username={user.username}/>) : (<ToolBar/>)}
+                       {user ? (<LoggedInUser username={user.displayName} avatar={user.avatarImage}/>) : (<ToolBar/>)}
                    </Grid>
                 </Toolbar>
             </AppBar>

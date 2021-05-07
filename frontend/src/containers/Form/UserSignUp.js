@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
+import {NavLink} from "react-router-dom";
 import {Grid, Typography} from "@material-ui/core";
-import FormInput from "./FormInput";
 import {makeStyles} from "@material-ui/core/styles";
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Button from "@material-ui/core/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {postUser} from "../../store/actions/UsersActions";
-import {NavLink} from "react-router-dom";
 import {Alert, AlertTitle} from "@material-ui/lab";
+import {postUser} from "../../store/actions/UsersActions";
+import FormInput from "./FormInput";
+import LoginFacebook from "../../components/UI/LoginFacebook/LoginFacebook";
 
 const useStyles = makeStyles({
     formBlock: {
@@ -27,6 +28,9 @@ const useStyles = makeStyles({
         float:'right',
         marginTop:'35px',
         fontSize:'small'
+    },
+    submitBtn:{
+        margin: '5px 0 10px'
     }
 })
 
@@ -35,7 +39,9 @@ const UserSingUp = () => {
     const dispatch = useDispatch();
     const [user, setUser] = useState({
         username:'',
-        password:''
+        password:'',
+        displayName:'',
+        avatarImage:'',
     });
     const error = useSelector(state => state.users.error);
     const newUser = useSelector(state=>state.users.data)
@@ -61,6 +67,7 @@ const UserSingUp = () => {
         e.preventDefault();
         await dispatch(postUser('/users', {...user}));
     };
+
 
     return (
         <Grid container item xs={12} className={classes.mainBlock}>
@@ -96,12 +103,32 @@ const UserSingUp = () => {
                     type='password'
                     error={Boolean(getFieldError('password'))}
                     helperText={getFieldError('password')}/>
-                <Button
-                    type='submit'
-                    color='primary'
-                    variant='contained'>
-                    Submit
-                </Button>
+
+                <FormInput
+                  name={'displayName'}
+                  label={'Display Name'}
+                  onChange={onChangeHandler}
+                  required={true}
+                  value={user.displayName}/>
+
+                <FormInput
+                  name={'avatarImage'}
+                  label={'Avatar Image'}
+                  onChange={onChangeHandler}
+                  value={user.avatarImage}/>
+
+                <Grid container item direction='column'>
+                    <Button
+                      type='submit'
+                      color='primary'
+                      variant='contained'
+                        className={classes.submitBtn}>
+                        Submit
+                    </Button>
+
+                    <LoginFacebook/>
+
+                </Grid>
                <Grid item>
                    <NavLink to='/login' className={classes.link}>
                        Already registered?

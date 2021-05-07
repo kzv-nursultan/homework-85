@@ -8,6 +8,7 @@ import {Alert, AlertTitle} from "@material-ui/lab";
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 import {loginUser} from "../../store/actions/UsersActions";
+import LoginFacebook from "../../components/UI/LoginFacebook/LoginFacebook";
 
 const useStyles = makeStyles({
     formBlock: {
@@ -30,6 +31,9 @@ const useStyles = makeStyles({
         float:'right',
         marginTop:'35px',
         fontSize:'small'
+    },
+    submitBtn: {
+        margin: '5px 0 10px'
     }
 })
 
@@ -40,7 +44,7 @@ const UserSingIn = () => {
     const loggedUser = useSelector(state=>state.users.loginUser);
     const [user, setUser] = useState({
         username:'',
-        password:''
+        password:'',
     });
 
     const onChangeHandler = e => {
@@ -56,6 +60,7 @@ const UserSingIn = () => {
         e.preventDefault();
         await dispatch(loginUser('/users/session', {...user}));
     };
+
 
     return (
         <Grid container item xs={12} className={classes.mainBlock}>
@@ -87,6 +92,7 @@ const UserSingIn = () => {
                    onChange={onChangeHandler}
                    required={true}
                    value={user.username}/>
+
                <FormInput
                    name={'password'}
                    label={'Password'}
@@ -94,12 +100,21 @@ const UserSingIn = () => {
                    required={true}
                    value={user.password}
                    type={'password'}/>
-               <Button
-                   type='submit'
-                   color='primary'
-                   variant='contained'>
-                   Submit
-               </Button>
+
+
+            <Grid container item direction='column'>
+                <Button
+                  type='submit'
+                  color='primary'
+                  variant='contained'
+                  className={classes.submitBtn}>
+                    Submit
+                </Button>
+
+                <LoginFacebook/>
+
+            </Grid>
+
                <Grid item>
                    <NavLink to='/register' className={classes.link}>
                        Are you new?

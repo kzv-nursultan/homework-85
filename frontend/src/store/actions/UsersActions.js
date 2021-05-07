@@ -61,7 +61,20 @@ export const logOut = () => {
             dispatch({type: LOG_OUT});
         } catch (e) {
             NotificationManager.error(e.message);
-            console.error(e);
         }
-    }
+    };
+};
+
+
+export const facebookLogin = data => {
+    return async dispatch => {
+        try {
+            const response = await axiosUrl.post('/users/facebookLogin', data);
+            dispatch(loginUserSuccess(response.data));
+            NotificationManager.success('Success');
+        } catch (e) {
+            dispatch(loginUserFailure(e));
+            NotificationManager.error(e?.message);
+        }
+    };
 };

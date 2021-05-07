@@ -130,12 +130,14 @@ const run = async () => {
         username: 'admin',
         password: 'admin',
         token: nanoid(),
-        role: 'admin'
+        role: 'admin',
+        displayName: 'admin'
     }, {
         username: 'user',
         password: 'user',
         token: nanoid(),
         role: 'user',
+        displayName: 'user'
     });
 
     await TrackHistory.create({
